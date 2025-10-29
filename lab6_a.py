@@ -11,8 +11,10 @@ GPIO.setmode(GPIO.BCM)
 pins = [23, 24, 25]
 pwms = []
 leds_brightness = []
-for p in pins:
+for (i, p) in enumerate(pins):
+    GPIO.setup(p, GPIO.OUT)
     pwms.append(GPIO.PWM(p, 2000))
+    pwms[i].start(100)
     leds_brightness.append(0)
 
 # Generate HTML for the web page:
@@ -104,6 +106,3 @@ webpageThread.start()
 while True:
     sleep(1)
     print('.')
-    pwms[0].ChangeDutyCycle(100)
-    pwms[1].ChangeDutyCycle(100)
-    pwms[2].ChangeDutyCycle(100)
