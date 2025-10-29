@@ -77,8 +77,6 @@ def serve_web_page():
 
                 pwms[selected_led].ChangeDutyCycle(brightness)
                 leds_brightness[selected_led] = brightness
-
-                conn.sendall(web_page(selected_led))
             except Exception as e:  
                 print("parsing error:", e)
 
