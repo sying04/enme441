@@ -58,10 +58,6 @@ def parsePOSTdata(data):
 
 # Serve the web page to a client on connection:
 def serve_web_page():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # TCP-IP socket
-    s.bind(('', 8080))
-    s.listen(3)  # up to 3 queued connections
-
     try:
         while True:
             print('Waiting for connection...')
@@ -96,6 +92,10 @@ def serve_web_page():
         print('Closing socket')
         s.close()
 
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind(('', 8080))
+s.listen(3)
+
 webpageThread = threading.Thread(target=serve_web_page)
 webpageThread.daemon = True
 webpageThread.start()
@@ -103,6 +103,9 @@ webpageThread.start()
 
 # Do whatever we want while the web server runs in
 # a separate thread:
-while True:
-    sleep(1)
-    print('.')
+try:
+    while True:
+        sleep(1)
+        print('.')
+except:
+    GPIO.cleanup()
