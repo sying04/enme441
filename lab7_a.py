@@ -10,11 +10,14 @@ GPIO.setmode(GPIO.BCM)
 
 pins = [23, 24, 25]
 pwms = []
-leds_brightness = []
+
+leds_brightness = [] # for the radio buttons
+last_brightness = 0 # for the slider
+
 for (i, p) in enumerate(pins):
     GPIO.setup(p, GPIO.OUT)
     pwms.append(GPIO.PWM(p, 1000))
-    pwms[i].start(100)
+    pwms[i].start(0)
     leds_brightness.append(0)
 
 # Generate HTML for the web page:
@@ -26,9 +29,9 @@ def web_page():
 
         <form action="/" method="POST">
               <label for="brightness">Brightness Level: </label><br>
-              <input type="range" id="brightness" name="brightness" min="0" max="100" value="100">
+              <input type="range" id="brightness" name="brightness" min="0" max="100" value=" """ + str(last_brightness) + = 0 """ ">
 
-              <p>Select LED: </p>
+              <div>Select LED: </div>
               <p><input type="radio" id="led1" name="selected_led" value="0">
               <label for="1">LED 1 (""" + str(leds_brightness[0]) + """)</label><br>
               <input type="radio" id="led2" name="selected_led" value="1">
@@ -67,19 +70,18 @@ def serve_web_page():
         client_message = conn.recv(2048).decode('utf-8')
         print(f'Message from client:\n{client_message}')
 
-        try:
+        if client_message.startswith('POST'): # only post messages !!!
             data_dict = parsePOSTdata(client_message)
-            if 'selected_led' in data_dict.keys() and 'brightness' in data_dict.keys():   # make all data posted
-                selected_led = data_dict["selected_led"] # which LED to change
-                brightness = data_dict["brightness"] # value of from slider
+            try:
+                selected_led = int(data_dict["selected_led"]) # which LED to change
+                brightness = int(data_dict["brightness"]) # value from slider
 
                 #global leds_brightness, pwms
-                pwms[int(selected_led)].ChangeDutyCycle(int(brightness))
-                leds_brightness[int(selected_led)] = int(brightness)
-            else:
-                pass
-        except Exception as e:
-            print("parsing error:", e)
+                pwms[selected_led].ChangeDutyCycle(brightness)
+                leds_brightness[selected_led] = brightness
+                last_brightness = selected_led
+            except Exception as e:
+                print("parsing error:", e)
 
         conn.send(b'HTTP/1.1 200 OK\n')         # status line
         conn.send(b'Content-type: text/html\n') # header (content type)
@@ -106,8 +108,6 @@ webpageThread.start()
 try:
     while True:
         sleep(1)
-        print(leds_brightness[0])
-        print(leds_brightness[1])
         # print('.')
 
 except KeyboardInterrupt:
