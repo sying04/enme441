@@ -29,11 +29,11 @@ def web_page():
               <input type="range" id="brightness" name="brightness" min="0" max="100" value="50">
 
               <p>Select LED: </p>
-              <p><input type="radio" id="led1" name="selected_led" value="1">
+              <p><input type="radio" id="led1" name="selected_led" value="0">
               <label for="1">LED 1 (""" + str(leds_brightness[0]) + """)</label><br>
-              <input type="radio" id="led2" name="selected_led" value="2">
+              <input type="radio" id="led2" name="selected_led" value="1">
               <label for="2">LED 2 (""" + str(leds_brightness[1]) + """)</label><br>
-              <input type="radio" id="led3" name="selected_led" value="3">
+              <input type="radio" id="led3" name="selected_led" value="2">
               <label for="3">LED 3 (""" + str(leds_brightness[2]) + """)</label>
               <p><button type="submit" class="button" name="submit" value="">Change Brightness</button></p>
         </form>
@@ -84,8 +84,8 @@ def serve_web_page():
         finally:
             conn.close()
 
-        pwms[int(selected_led) - 1].ChangeDutyCycle(int(brightness))
-        leds_brightness[int(selected_led) - 1] = int(brightness)
+        pwms[int(selected_led)].ChangeDutyCycle(int(brightness))
+        leds_brightness[int(selected_led)] = int(brightness)
 
 # socket !!!
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
