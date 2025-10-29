@@ -30,11 +30,11 @@ def web_page():
 
               <p>Select LED: </p>
               <p><input type="radio" id="1" name="selected_led" value="LED 1">
-              <label for="1">LED 1 (""" + leds_brightness[0] + """)</label><br>
+              <label for="1">LED 1 (""" + str(leds_brightness[0]) + """)</label><br>
               <input type="radio" id="2" name="selected_led" value="LED 2">
-              <label for="2">LED 2 """ + leds_brightness[1] + """</label><br>
+              <label for="2">LED 2 """ + str(leds_brightness[1]) + """</label><br>
               <input type="radio" id="3" name="selected_led" value="LED 3">
-              <label for="3">LED 3 """ + leds_brightness[2] + """</label>
+              <label for="3">LED 3 """ + str(leds_brightness[2]) + """</label>
               <p><button type="submit" class="button" name="submit" value="">Change Brightness</button></p>
         </form>
 
@@ -61,7 +61,6 @@ def serve_web_page():
     while True:
         print('Waiting for connection...')
         conn, (client_ip, client_port) = s.accept()     # blocking call
-        request = conn.recv(1024)               # read request (required even if none)
 
         # post request stuff
         print(f'Connection from {client_ip}')
@@ -85,9 +84,10 @@ def serve_web_page():
         finally:
             conn.close()
 
-        pwms[selected_led - 1].ChangeDutyCycle(brightness)
-        leds_brightness[selected_led - 1] = brightness
+        pwms[int(selected_led) - 1].ChangeDutyCycle(int(brightness))
+        leds_brightness[int(selected_led) - 1] = int(brightness)
 
+# socket !!!
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('', 8080))
 s.listen(3)
@@ -104,8 +104,8 @@ try:
         sleep(1)
         print('.')
 except:
-    print('Joining webpageTread')
-    webpageTread.join()
+    print('Joining webpageThread')
+    webpageThread.join()
     print('Closing socket')
     s.close()
     GPIO.cleanup()
