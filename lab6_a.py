@@ -105,4 +105,4 @@ webpageThread.start()
 while True:
     sleep(1)
     print('.')
-    pwms[0].ChangeDutyCycle(20)
+    print(pwms[0])
