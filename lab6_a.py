@@ -8,7 +8,7 @@ from time import sleep
 
 GPIO.setmode(GPIO.BCM)
 
-pins = [16, 20, 21]
+pins = [27, 28, 29]
 pwms = []
 leds_brightness = []
 for p in pins:
