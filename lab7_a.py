@@ -103,9 +103,9 @@ try:
     while True:
         sleep(1)
         print('.')
-except:
-    print('Joining webpageThread')
-    webpageThread.join()
+except KeyboardInterrupt:
     print('Closing socket')
     s.close()
+    print('Joining webpageThread')
+    webpageThread.join()
     GPIO.cleanup()
