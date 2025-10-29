@@ -14,7 +14,7 @@ leds_brightness = []
 for p in pins:
     GPIO.setup(p, GPIO.OUT)
     pwms.append(GPIO.PWM(p, 2000))
-    states.append(0.0)
+    leds_brightness.append(0.0)
 
 # Generate HTML for the web page:
 def web_page():
