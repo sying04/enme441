@@ -16,7 +16,7 @@ for p in pins:
     pwms.append(GPIO.PWM(p, 2000))
     leds_brightness.append(0)
 
-pwms[0].changeDutyCycle(50)
+pwms[0].ChangeDutyCycle(50)
 
 # Generate HTML for the web page:
 def web_page():
