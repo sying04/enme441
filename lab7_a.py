@@ -113,6 +113,6 @@ try:
 except KeyboardInterrupt:
     print('Closing socket')
     s.close()
+    GPIO.cleanup() 
     print('Joining webpageThread')
     webpageThread.join()
-    GPIO.cleanup()
