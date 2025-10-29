@@ -59,8 +59,6 @@ def parsePOSTdata(data):
 # Serve the web page to a client on connection:
 def serve_web_page():
     while True:
-        selected_led = 0
-        brightness = 0
         print('Waiting for connection...')
         conn, (client_ip, client_port) = s.accept()     # blocking call
 
@@ -71,10 +69,15 @@ def serve_web_page():
 
         try:
             data_dict = parsePOSTdata(client_message)
-            if 'selected_led' in data_dict.keys():   # make sure data was posted
+            if 'selected_led' in data_dict.keys() and 'brightness' in data_dict.keys():   # make all data posted
                 selected_led = data_dict["selected_led"] # which LED to change
-            if 'brightness' in data_dict.keys():
                 brightness = data_dict["brightness"] # value of from slider
+
+                #global leds_brightness, pwms
+                pwms[int(selected_led)].ChangeDutyCycle(int(brightness))
+                leds_brightness[int(selected_led)] = int(brightness)
+            else
+                pass
         except Exception as e:
             print("parsing error:", e)
 
@@ -86,10 +89,6 @@ def serve_web_page():
             conn.sendall(web_page())                  # body
         finally:
             conn.close()
-
-        #global leds_brightness, pwms
-        pwms[int(selected_led)].ChangeDutyCycle(int(brightness))
-        leds_brightness[int(selected_led)] = int(brightness)
 
 # socket !!!
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
