@@ -13,13 +13,12 @@ pwms = []
 leds_brightness = []
 for (i, p) in enumerate(pins):
     GPIO.setup(p, GPIO.OUT)
-    pwms.append(GPIO.PWM(p, 2000))
+    pwms.append(GPIO.PWM(p, 1000))
     pwms[i].start(100)
     leds_brightness.append(0)
 
 # Generate HTML for the web page:
 def web_page():
-    global leds_brightness
     html = """
         <!DOCTYPE html>
         <html>
@@ -27,7 +26,7 @@ def web_page():
 
         <form action="/" method="POST">
               <label for="brightness">Brightness Level: </label><br>
-              <input type="range" id="brightness" name="brightness" min="0" max="100" value="50">
+              <input type="range" id="brightness" name="brightness" min="0" max="100" value="100">
 
               <p>Select LED: </p>
               <p><input type="radio" id="led1" name="selected_led" value="0">
@@ -106,7 +105,10 @@ webpageThread.start()
 try:
     while True:
         sleep(1)
-        print('.')
+        print(led_brightness[0])
+        print(led_brightness[1])
+        # print('.')
+
 except KeyboardInterrupt:
     print('Closing socket')
     s.close()
