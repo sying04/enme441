@@ -60,7 +60,7 @@ def serve_web_page():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # TCP-IP socket
     s.bind(('', 8080))
     s.listen(3)  # up to 3 queued connections
-    print("hello chat")
+
     try:
         while True:
             print('Waiting for connection...')
@@ -105,3 +105,4 @@ webpageThread.start()
 while True:
     sleep(1)
     print('.')
+    pwms[0].ChangeDutyCycle(20)
