@@ -57,7 +57,7 @@ def parsePOSTdata(data):
 # Serve the web page to a client on connection:
 def serve_web_page():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # TCP-IP socket
-    s.bind(('', 8080))
+    s.bind(('', 8081))
     s.listen(3)  # up to 3 queued connections
     try:
         while True:
