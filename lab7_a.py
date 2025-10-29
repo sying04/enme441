@@ -68,14 +68,15 @@ def serve_web_page():
         print(f'Connection from {client_ip}')
         client_message = conn.recv(2048).decode('utf-8')
         print(f'Message from client:\n{client_message}')
-        data_dict = parsePOSTdata(client_message)
-        if 'selected_led' in data_dict.keys():   # make sure data was posted
-            selected_led = data_dict["selected_led"] # which LED to change
-        elif 'brightness' in data_dict.keys():
-            brightness = data_dict["brightness"] # value of from slider
-        else:   # web page loading for 1st time so start with 0 for the LED byte
-            selected_led = '0'
-            brightness = '0'
+
+        try:
+            data_dict = parsePOSTdata(client_message)
+            if 'selected_led' in data_dict.keys():   # make sure data was posted
+                selected_led = data_dict["selected_led"] # which LED to change
+            if 'brightness' in data_dict.keys():
+                brightness = data_dict["brightness"] # value of from slider
+        except Exception as e:
+            print("parsing error:", e)
 
         conn.send(b'HTTP/1.1 200 OK\n')         # status line
         conn.send(b'Content-type: text/html\n') # header (content type)
@@ -92,6 +93,7 @@ def serve_web_page():
 
 # socket !!!
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # address reuse
 s.bind(('', 8080))
 s.listen(3)
 
