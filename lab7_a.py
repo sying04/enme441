@@ -19,6 +19,7 @@ for (i, p) in enumerate(pins):
 
 # Generate HTML for the web page:
 def web_page():
+    global leds_brightness
     html = """
         <!DOCTYPE html>
         <html>
@@ -59,6 +60,8 @@ def parsePOSTdata(data):
 # Serve the web page to a client on connection:
 def serve_web_page():
     while True:
+        selected_led = 0
+        brightness = 0
         print('Waiting for connection...')
         conn, (client_ip, client_port) = s.accept()     # blocking call
 
@@ -84,6 +87,7 @@ def serve_web_page():
         finally:
             conn.close()
 
+        #global leds_brightness, pwms
         pwms[int(selected_led)].ChangeDutyCycle(int(brightness))
         leds_brightness[int(selected_led)] = int(brightness)
 
