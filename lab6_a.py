@@ -60,6 +60,7 @@ def serve_web_page():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # TCP-IP socket
     s.bind(('', 8080))
     s.listen(3)  # up to 3 queued connections
+    print("hello chat")
     try:
         while True:
             print('Waiting for connection...')
@@ -79,7 +80,6 @@ def serve_web_page():
                 selected_led = '0'
                 brightness = '0'
 
-            print("hello chat")
             conn.send(b'HTTP/1.1 200 OK\n')         # status line
             conn.send(b'Content-type: text/html\n') # header (content type)
             conn.send(b'Connection: close\r\n\r\n') # header (tell client to close at end)
