@@ -12,7 +12,6 @@ pins = [23, 24, 25]
 pwms = []
 leds_brightness = []
 for p in pins:
-    GPIO.setup(p, GPIO.OUT)
     pwms.append(GPIO.PWM(p, 2000))
     leds_brightness.append(0)
 
