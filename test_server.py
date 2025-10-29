@@ -3,7 +3,7 @@ import socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # create a socket
 # AF_INET --> IPv4 socket
 # SOCK_STREAM --> use TCP as the message transport protocol
-s.bind((127.0.0.1, 8080)) # Bind HOST IP address through the given PORT
+s.bind((HOST, 8080)) # Bind HOST IP address through the given PORT
 # HOST = specific IP address, the loopback address (127.0.0.1),
 # or an empty string (any connection allowed)
 # PORT = privileged port (e.g. 80 for HTTP) or custom port (>1023)
