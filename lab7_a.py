@@ -36,7 +36,7 @@ def web_page():
               <input type="radio" id="led2" name="selected_led" value="1">
               <label for="2">LED 2 ({leds_brightness[1]})</label><br>
               <input type="radio" id="led3" name="selected_led" value="2">
-              <label for="3">LED 3 ({leds_brightness[2]}) + """)</label>
+              <label for="3">LED 3 ({leds_brightness[2]})</label>
               <p><button type="submit" class="button" name="submit" value="">Change Brightness</button></p>
         </form>
 

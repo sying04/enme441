@@ -22,7 +22,8 @@ for (i, p) in enumerate(pins):
 
 # Generate HTML for the web page:
 def web_page():
-    html = f""" # modified from ChatGPT
+    # taken & modified from ChatGPT
+    html = f""" 
         <html>
         <head>
             <meta charset="UTF-8">
