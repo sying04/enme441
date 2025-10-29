@@ -28,7 +28,7 @@ def web_page():
 
         <form action="/" method="POST">
               <label for="brightness">Brightness Level: </label><br>
-              <input type="range" id="brightness" name="brightness" min="0" max="100" value="{last_selected}">
+              <input type="range" id="brightness" name="brightness" min="0" max="100" value="""" + str(last_selected) + """">
 
               <div>Select LED: </div>
               <p><input type="radio" id="led1" name="selected_led" value="0">
