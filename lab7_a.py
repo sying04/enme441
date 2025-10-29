@@ -12,6 +12,7 @@ pins = [23, 24, 25]
 pwms = []
 
 leds_brightness = [] # for the radio buttons
+last_selected = 0 # i'm not a cs student i just want this to work
 
 for (i, p) in enumerate(pins):
     GPIO.setup(p, GPIO.OUT)
@@ -28,7 +29,7 @@ def web_page():
 
         <form action="/" method="POST">
               <label for="brightness">Brightness Level: </label><br>
-              <input type="range" id="brightness" name="brightness" min="0" max="100" value="0">
+              <input type="range" id="brightness" name="brightness" min="0" max="100" value=" """ + str(last_selected) + """ ">
 
               <div>Select LED: </div>
               <p><input type="radio" id="led1" name="selected_led" value="0">
@@ -77,11 +78,13 @@ def serve_web_page():
 
                 pwms[selected_led].ChangeDutyCycle(brightness)
                 leds_brightness[selected_led] = brightness
+                global last_selected
+                last_selected = brightness # janky
             except Exception as e:  
                 print("parsing error:", e)
 
         conn.send(b'HTTP/1.1 200 OK\n')         # status line
-        conn.send(b'Content-type: text/html\n') # header (content type)
+        conn.send(b'Content-type: text/html\r\n') # header (content type)
         conn.send(b'Connection: close\r\n\r\n') # header (tell client to close at end)
         # send body in try block in case connection is interrupted:
         try:
