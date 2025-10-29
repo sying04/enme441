@@ -21,7 +21,7 @@ for (i, p) in enumerate(pins):
 
 # Generate HTML for the web page:
 def web_page(selected_led = 0):
-    html = """
+    html = f"""
         <!DOCTYPE html>
         <html>
         <body>
