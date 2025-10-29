@@ -25,16 +25,16 @@ def web_page():
         <body>
 
         <form action="/" method="POST">
-              <label for="brightness">Brightness level: </label><br>
+              <label for="brightness">Brightness Level: </label><br>
               <input type="range" id="brightness" name="brightness" min="0" max="100" value="50">
 
               <p>Select LED: </p>
-              <p><input type="radio" id="1" name="selected_led" value="LED 1">
+              <p><input type="radio" id="led1" name="selected_led" value="1">
               <label for="1">LED 1 (""" + str(leds_brightness[0]) + """)</label><br>
-              <input type="radio" id="2" name="selected_led" value="LED 2">
-              <label for="2">LED 2 """ + str(leds_brightness[1]) + """</label><br>
-              <input type="radio" id="3" name="selected_led" value="LED 3">
-              <label for="3">LED 3 """ + str(leds_brightness[2]) + """</label>
+              <input type="radio" id="led2" name="selected_led" value="2">
+              <label for="2">LED 2 (""" + str(leds_brightness[1]) + """)</label><br>
+              <input type="radio" id="led3" name="selected_led" value="3">
+              <label for="3">LED 3 (""" + str(leds_brightness[2]) + """)</label>
               <p><button type="submit" class="button" name="submit" value="">Change Brightness</button></p>
         </form>
 
