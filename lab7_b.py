@@ -12,7 +12,7 @@ pins = [23, 24, 25]
 pwms = []
 
 leds_brightness = [] # for the radio buttons
-last_selected = 0 # i'm not a cs student i just want this to work
+# last_selected = 0 # i'm not a cs student i just want this to work
 
 for (i, p) in enumerate(pins):
     GPIO.setup(p, GPIO.OUT)
@@ -22,24 +22,65 @@ for (i, p) in enumerate(pins):
 
 # Generate HTML for the web page:
 def web_page():
-    html = """
+    html = f""" # modified from ChatGPT
         <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>LED Control</title>
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 20px; }}
+                .led-control {{ margin-bottom: 20px; }}
+                label {{ font-weight: bold; }}
+            </style>
+        </head>
         <body>
+            <h1>LED Brightness Control</h1>
 
-        <form action="/" method="POST">
-              <label for="brightness">Brightness Level: </label><br>
-              <input type="range" id="brightness" name="brightness" min="0" max="100" value="""" + str(last_selected) + """">
+            <div class="led-control">
+                <label for="led0">LED 1:</label>
+                <input type="range" id="led0" min="0" max="100" value="0">
+                <span id="val0">0</span>%
+            </div>
 
-              <div>Select LED: </div>
-              <p><input type="radio" id="led1" name="selected_led" value="0">
-              <label for="1">LED 1 (""" + str(leds_brightness[0]) + """)</label><br>
-              <input type="radio" id="led2" name="selected_led" value="1">
-              <label for="2">LED 2 (""" + str(leds_brightness[1]) + """)</label><br>
-              <input type="radio" id="led3" name="selected_led" value="2">
-              <label for="3">LED 3 (""" + str(leds_brightness[2]) + """)</label>
-              <p><button type="submit" class="button" name="submit" value="">Change Brightness</button></p>
-        </form>
+            <div class="led-control">
+                <label for="led1">LED 2:</label>
+                <input type="range" id="led1" min="0" max="100" value="0">
+                <span id="val1">0</span>%
+            </div>
 
+            <div class="led-control">
+                <label for="led2">LED 3:</label>
+                <input type="range" id="led2" min="0" max="100" value="0">
+                <span id="val2">0</span>%
+            </div>
+
+            <script>
+                // Function to send a POST request with LED and brightness
+                function updateLED(led, brightness) {{
+                    fetch("/", {{
+                        method: "POST",
+                        headers: {{ "Content-Type": "application/x-www-form-urlencoded" }},
+                        body: `selected_led=${{led}}&brightness=${{brightness}}`
+                    }})
+                    .then(response => response.text())
+                    .then(data => {{
+                        console.log(`LED ${{led}} set to ${{brightness}}`);
+                    }})
+                    .catch(error => console.error("Error:", error));
+                }}
+
+                // Attach input event listeners to all sliders
+                for (let i = 0; i < 3; i++) {{
+                    const slider = document.getElementById(`led${{i}}`);
+                    const valueSpan = document.getElementById(`val${{i}}`);
+
+                    slider.addEventListener("input", function() {{
+                        const brightness = slider.value;
+                        valueSpan.textContent = brightness; // Update displayed value
+                        updateLED(i, brightness);           // Send POST request
+                    }});
+                }}
+            </script>
         </body>
         </html>
         """
@@ -77,8 +118,8 @@ def serve_web_page():
 
                 pwms[selected_led].ChangeDutyCycle(brightness)
                 leds_brightness[selected_led] = brightness
-                global last_selected
-                last_selected = brightness # janky
+                # global last_selected
+                # last_selected = brightness # janky
             except Exception as e:  
                 print("parsing error:", e)
 

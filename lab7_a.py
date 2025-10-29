@@ -32,11 +32,11 @@ def web_page():
 
               <div>Select LED: </div>
               <p><input type="radio" id="led1" name="selected_led" value="0">
-              <label for="1">LED 1 (""" + str(leds_brightness[0]) + """)</label><br>
+              <label for="1">LED 1 ({leds_brightness[0]})</label><br>
               <input type="radio" id="led2" name="selected_led" value="1">
-              <label for="2">LED 2 (""" + str(leds_brightness[1]) + """)</label><br>
+              <label for="2">LED 2 ({leds_brightness[1]})</label><br>
               <input type="radio" id="led3" name="selected_led" value="2">
-              <label for="3">LED 3 (""" + str(leds_brightness[2]) + """)</label>
+              <label for="3">LED 3 ({leds_brightness[2]}) + """)</label>
               <p><button type="submit" class="button" name="submit" value="">Change Brightness</button></p>
         </form>
 
