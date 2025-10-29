@@ -105,8 +105,8 @@ webpageThread.start()
 try:
     while True:
         sleep(1)
-        print(led_brightness[0])
-        print(led_brightness[1])
+        print(leds_brightness[0])
+        print(leds_brightness[1])
         # print('.')
 
 except KeyboardInterrupt:
