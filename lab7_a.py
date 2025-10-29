@@ -20,23 +20,23 @@ for (i, p) in enumerate(pins):
     leds_brightness.append(0)
 
 # Generate HTML for the web page:
-def web_page(selected_led = 0):
-    html = f"""
+def web_page():
+    html = """
         <!DOCTYPE html>
         <html>
         <body>
 
         <form action="/" method="POST">
               <label for="brightness">Brightness Level: </label><br>
-              <input type="range" id="brightness" name="brightness" min="0" max="100" value="{leds_brightness[selected_led]}">
+              <input type="range" id="brightness" name="brightness" min="0" max="100" value="0">
 
               <div>Select LED: </div>
               <p><input type="radio" id="led1" name="selected_led" value="0">
-              <label for="1">LED 1 ("{leds_brightness[0]}")</label><br>
+              <label for="1">LED 1 (""" + str(leds_brightness[0]) + """)</label><br>
               <input type="radio" id="led2" name="selected_led" value="1">
-              <label for="2">LED 2 ("{leds_brightness[1]}")</label><br>
+              <label for="2">LED 2 (""" + str(leds_brightness[1]) + """)</label><br>
               <input type="radio" id="led3" name="selected_led" value="2">
-              <label for="3">LED 3 ("{leds_brightness[2]}")</label>
+              <label for="3">LED 3 (""" + str(leds_brightness[2]) + """)</label>
               <p><button type="submit" class="button" name="submit" value="">Change Brightness</button></p>
         </form>
 
