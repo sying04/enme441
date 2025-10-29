@@ -76,7 +76,7 @@ def serve_web_page():
                 #global leds_brightness, pwms
                 pwms[int(selected_led)].ChangeDutyCycle(int(brightness))
                 leds_brightness[int(selected_led)] = int(brightness)
-            else
+            else:
                 pass
         except Exception as e:
             print("parsing error:", e)
